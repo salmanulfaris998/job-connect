@@ -18,6 +18,10 @@ class AppColors {
   static const Color darkSecondaryText = Color(0xFF9CA3AF);
   static const Color darkBorder = Color(0xFF262D34);
 
+  // Filter chips
+  static const Color lightFilterChip = Color(0xFFD7E3FF);
+  static const Color darkFilterChip = Color(0xFF142446);
+
   // Status colors
   static const Color success = Color(0xFF22C55E);
   static const Color warning = Color(0xFFFACC15);
@@ -27,4 +31,45 @@ class AppColors {
   // Chat bubbles
   static const Color myMessage = Color(0xFF0066FF);
   static const Color otherMessage = Color(0xFF262D34);
+}
+
+class FilterChipColors extends ThemeExtension<FilterChipColors> {
+  const FilterChipColors({
+    required this.activeBackground,
+    required this.inactiveBackground,
+    required this.inactiveText,
+    required this.activeText,
+  });
+
+  final Color activeBackground;
+  final Color inactiveBackground;
+  final Color inactiveText;
+  final Color activeText;
+
+  @override
+  FilterChipColors copyWith({
+    Color? activeBackground,
+    Color? inactiveBackground,
+    Color? inactiveText,
+    Color? activeText,
+  }) {
+    return FilterChipColors(
+      activeBackground: activeBackground ?? this.activeBackground,
+      inactiveBackground: inactiveBackground ?? this.inactiveBackground,
+      inactiveText: inactiveText ?? this.inactiveText,
+      activeText: activeText ?? this.activeText,
+    );
+  }
+
+  @override
+  FilterChipColors lerp(ThemeExtension<FilterChipColors>? other, double t) {
+    if (other is! FilterChipColors) return this;
+    return FilterChipColors(
+      activeBackground: Color.lerp(activeBackground, other.activeBackground, t)!,
+      inactiveBackground:
+          Color.lerp(inactiveBackground, other.inactiveBackground, t)!,
+      inactiveText: Color.lerp(inactiveText, other.inactiveText, t)!,
+      activeText: Color.lerp(activeText, other.activeText, t)!,
+    );
+  }
 }

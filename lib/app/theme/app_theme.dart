@@ -15,6 +15,14 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.lightBackground,
       cardColor: AppColors.lightCard,
+      extensions: const [
+        FilterChipColors(
+          activeBackground: AppColors.primary,
+          inactiveBackground: AppColors.lightFilterChip,
+          inactiveText: Colors.black87,
+          activeText: Colors.white,
+        ),
+      ],
 
       textTheme: const TextTheme(
         titleLarge: AppTextStyle.headline, // 22, bold
@@ -75,6 +83,14 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.darkBackground,
       cardColor: AppColors.darkCard,
+      extensions: const [
+        FilterChipColors(
+          activeBackground: AppColors.primary,
+          inactiveBackground: AppColors.darkFilterChip,
+          inactiveText: Colors.white70,
+          activeText: Colors.white,
+        ),
+      ],
 
       textTheme: TextTheme(
         titleLarge: AppTextStyle.headline, // 22, bold

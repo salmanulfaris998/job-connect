@@ -19,4 +19,5 @@ class AppStrings {
 
   static const String onboardingButtonNext = 'Next';
   static const String onboardingButtonGetStarted = 'Get Started';
+  static const String searchjob = 'Search for a job or skill';
 }
