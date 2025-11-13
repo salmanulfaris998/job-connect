@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class MyJobsScreen extends StatelessWidget {
+  const MyJobsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account'),
+        title: const Text('My Jobs'),
       ),
       body: const Center(
-        child: Text('Profile content coming soon'),
+        child: Text('My Jobs content coming soon'),
       ),
     );
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jobconnect/app/constants/app_strings.dart';
 import 'package:jobconnect/app/theme/colors.dart';
 import 'package:jobconnect/app/theme/spacing.dart';
 import 'package:jobconnect/app/theme/typography.dart';
-import 'package:jobconnect/features/home/presentation/home_screen.dart';
+import 'package:jobconnect/features/auth/providers/onboarding_seen_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
@@ -16,26 +17,6 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _controller = PageController();
-  final List<_OnboardingSlide> _slides = const [
-    _OnboardingSlide(
-      image: 'assets/onboarding/slide1.png',
-      title: 'Find Work Near You',
-      description:
-          'Browse thousands of local jobs, from skilled to unskilled, right in your area.',
-    ),
-    _OnboardingSlide(
-      image: 'assets/onboarding/slide2.png',
-      title: 'Post a Job Easily',
-      description:
-          'Need a helping hand? Post your job for free and reach nearby workers instantly.',
-    ),
-    _OnboardingSlide(
-      image: 'assets/onboarding/slide3.png',
-      title: 'Connect & Earn',
-      description:
-          'Chat directly, complete the work, and build your reputation through ratings.',
-    ),
-  ];
 
   int _currentIndex = 0;
   bool _hasNavigated = false;
@@ -47,7 +28,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _handleNext() {
-    if (_currentIndex >= _slides.length - 1) {
+    final totalSlides = ref.read(onboardingSlidesProvider).length;
+    if (totalSlides == 0) return;
+
+    if (_currentIndex >= totalSlides - 1) {
       _goToHome();
     } else {
       _controller.nextPage(
@@ -61,17 +45,24 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_hasNavigated || !mounted) return;
     _hasNavigated = true;
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
-      ),
-    );
+    context.go('/home');
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final slides = ref.watch(onboardingSlidesProvider);
+
+    if (slides.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    final isLastSlide = _currentIndex >= slides.length - 1;
 
     return Scaffold(
       body: Container(
@@ -124,12 +115,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Expanded(
                 child: PageView.builder(
                   controller: _controller,
-                  itemCount: _slides.length,
+                  itemCount: slides.length,
                   onPageChanged: (index) {
                     setState(() => _currentIndex = index);
                   },
                   itemBuilder: (context, index) {
-                    final slide = _slides[index];
+                    final slide = slides[index];
                     return _OnboardingSlideView(slide: slide);
                   },
                 ),
@@ -138,7 +129,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
               SmoothPageIndicator(
                 controller: _controller,
-                count: _slides.length,
+                count: slides.length,
                 effect: ExpandingDotsEffect(
                   dotHeight: AppSpacing.xs,
                   dotWidth: AppSpacing.sm,
@@ -165,9 +156,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       foregroundColor: Colors.white,
                     ),
                     child: Text(
-                      _currentIndex == _slides.length - 1
-                          ? 'Get Started'
-                          : 'Next',
+                      isLastSlide
+                          ? AppStrings.onboardingButtonGetStarted
+                          : AppStrings.onboardingButtonNext,
                       style: AppTextStyle.title.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
@@ -186,7 +177,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 class _OnboardingSlideView extends StatelessWidget {
   const _OnboardingSlideView({required this.slide});
 
-  final _OnboardingSlide slide;
+  final OnboardingSlideData slide;
 
   @override
   Widget build(BuildContext context) {
@@ -266,15 +257,4 @@ class _OnboardingSlideView extends StatelessWidget {
       ),
     );
   }
-}
-class _OnboardingSlide {
-  const _OnboardingSlide({
-    required this.image,
-    required this.title,
-    required this.description,
-  });
-
-  final String image;
-  final String title;
-  final String description;
 }
