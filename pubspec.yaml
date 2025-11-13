@@ -1,0 +1,115 @@
+name: jobconnect
+description: A local job connection app built with Flutter, Riverpod & Supabase.
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # -----------------------------
+  # STATE MANAGEMENT (RIVERPOD)
+  # -----------------------------
+  flutter_riverpod: ^2.5.1
+  hooks_riverpod: ^2.5.1
+  flutter_hooks: ^0.20.5
+
+  # -----------------------------
+  # SUPABASE BACKEND
+  # -----------------------------
+  supabase_flutter: ^2.5.7
+  supabase: ^2.5.3
+
+  # -----------------------------
+  # NETWORKING
+  # -----------------------------
+  http: ^1.2.1
+  dio: ^5.4.0
+
+  # -----------------------------
+  # LOCATION FEATURES
+  # -----------------------------
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+  google_maps_flutter: ^2.6.0 # optional (if needed)
+
+  # -----------------------------
+  # UI / MATERIAL 3
+  # -----------------------------
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+  smooth_page_indicator: ^1.1.0
+  carousel_slider: ^5.0.0
+
+  # -----------------------------
+  # IMAGE PICKING & COMPRESSION
+  # -----------------------------
+  image_picker: ^1.1.1
+  image_cropper: ^5.0.1
+  flutter_image_compress: ^2.2.0
+  intl: ^0.20.2
+
+  # -----------------------------
+  # CHAT / REALTIME
+  # -----------------------------
+  uuid: ^4.4.0
+  timeago: ^3.6.0
+
+  # -----------------------------
+  # FORM UTILITIES
+  # -----------------------------
+  form_validator: ^2.1.1
+
+  # -----------------------------
+  # PERMISSIONS
+  # -----------------------------
+  permission_handler: ^11.3.1
+
+  # -----------------------------
+  # LOCAL STORAGE
+  # -----------------------------
+  shared_preferences: ^2.3.2
+
+  # -----------------------------
+  # NOTIFICATIONS (OPTIONAL)
+  # -----------------------------
+  firebase_core: ^3.4.0
+  firebase_messaging: ^15.0.0
+
+  # -----------------------------
+  # ANIMATIONS & ICONS
+  # -----------------------------
+  lottie: ^3.1.2
+  iconsax: ^0.0.8
+  flutter_iconly: ^1.0.2
+
+  # -----------------------------
+  # UTILITIES
+  # -----------------------------
+  url_launcher: ^6.3.0
+  flutter_spinkit: ^5.2.1
+  connectivity_plus: ^5.0.2
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.7
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/onboarding/
+    - assets/lottie/
+    - assets/raw/

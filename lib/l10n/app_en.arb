@@ -1,0 +1,40 @@
+{
+  "@@locale": "en",
+
+  "appName": "JobConnect",
+
+  "welcome": "Welcome",
+  "next": "Next",
+  "getStarted": "Get Started",
+
+  "findJobs": "Find Jobs",
+  "postJob": "Post a Job",
+  "myJobs": "My Jobs",
+  "profile": "Profile",
+
+  "login": "Login",
+  "logout": "Logout",
+  "continueWithGoogle": "Continue with Google",
+
+  "searchJobs": "Search for jobs",
+
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "save": "Save",
+  "edit": "Edit",
+
+  "jobDetails": "Job Details",
+  "description": "Description",
+  "location": "Location",
+  "contact": "Contact",
+
+  "chat": "Chat",
+  "send": "Send",
+
+  "settings": "Settings",
+  "language": "Language",
+  "helpSupport": "Help & Support",
+
+  "terms": "Terms & Conditions",
+  "privacyPolicy": "Privacy Policy"
+}

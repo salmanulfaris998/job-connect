@@ -1,0 +1,40 @@
+{
+  "@@locale": "ml",
+
+  "appName": "JobConnect",
+
+  "welcome": "സ്വാഗതം",
+  "next": "അടുത്തത്",
+  "getStarted": "ആരംഭിക്കുക",
+
+  "findJobs": "ജോലികൾ കണ്ടെത്തുക",
+  "postJob": "ജോലി പോസ്റ്റ് ചെയ്യുക",
+  "myJobs": "എന്റെ ജോലികൾ",
+  "profile": "പ്രൊഫൈൽ",
+
+  "login": "ലോഗിൻ",
+  "logout": "ലോഗൗട്ട്",
+  "continueWithGoogle": "Google ഉപയോഗിച്ച് തുടരുക",
+
+  "searchJobs": "ജോലികൾ തിരയുക",
+
+  "apply": "അപ്ലൈ ചെയ്യുക",
+  "cancel": "റദ്ദാക്കുക",
+  "save": "സംരക്ഷിക്കുക",
+  "edit": "എഡിറ്റ് ചെയ്യുക",
+
+  "jobDetails": "ജോലി വിശദാംശങ്ങൾ",
+  "description": "വിവരണം",
+  "location": "ലൊക്കേഷൻ",
+  "contact": "കോണ്ടാക്റ്റ്",
+
+  "chat": "ചാറ്റ്",
+  "send": "അയയ്ക്കുക",
+
+  "settings": "സെറ്റിംഗ്സ്",
+  "language": "ഭാഷ",
+  "helpSupport": "ഹെൽപ്പ് & സപ്പോർട്ട്",
+
+  "terms": "നിബന്ധനകൾ",
+  "privacyPolicy": "സ്വകാര്യതാ നയം"
+}

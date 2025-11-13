@@ -1,0 +1,40 @@
+{
+  "@@locale": "hi",
+
+  "appName": "JobConnect",
+
+  "welcome": "स्वागत है",
+  "next": "आगे",
+  "getStarted": "शुरू करें",
+
+  "findJobs": "नौकरियाँ खोजें",
+  "postJob": "जॉब पोस्ट करें",
+  "myJobs": "मेरी नौकरियाँ",
+  "profile": "प्रोफ़ाइल",
+
+  "login": "लॉगिन",
+  "logout": "लॉगआउट",
+  "continueWithGoogle": "Google से जारी रखें",
+
+  "searchJobs": "नौकरी खोजें",
+
+  "apply": "आवेदन करें",
+  "cancel": "रद्द करें",
+  "save": "सेव करें",
+  "edit": "संपादित करें",
+
+  "jobDetails": "नौकरी विवरण",
+  "description": "विवरण",
+  "location": "स्थान",
+  "contact": "कॉन्टैक्ट",
+
+  "chat": "चैट",
+  "send": "भेजें",
+
+  "settings": "सेटिंग्स",
+  "language": "भाषा",
+  "helpSupport": "मदद और समर्थन",
+
+  "terms": "नियम व शर्तें",
+  "privacyPolicy": "गोपनीयता नीति"
+}
