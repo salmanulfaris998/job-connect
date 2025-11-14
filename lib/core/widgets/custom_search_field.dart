@@ -34,6 +34,12 @@ class CustomSearchField extends StatelessWidget {
           width: 1.2,
         ),
         boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(isDark ? 0.35 : 0.35),
+            blurRadius: isDark ? 13 : 11,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
+          ),
           if (!isDark)
             BoxShadow(
               color: Colors.black.withOpacity(0.04),

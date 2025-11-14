@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:jobconnect/app/theme/colors.dart';
 
 class BottomNavShell extends StatelessWidget {
   const BottomNavShell({
@@ -59,6 +60,8 @@ class _FloatingNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const primaryBlue = Color(0xFF0066FF);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Center(
       child: Container(
@@ -67,14 +70,22 @@ class _FloatingNavBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: Colors.black, width: .3),
+          border: Border.all(
+              color: AppColors.primary.withOpacity(isDark ? 0.6 : 0.6),
+              width: 1),
           boxShadow: [
             BoxShadow(
-              color: primaryBlue.withOpacity(0.25),
-              blurRadius: 35,
+              color: AppColors.primary.withOpacity(isDark ? 0.35 : 0.35),
+              blurRadius: isDark ? 13 : 11,
               spreadRadius: 1,
-              offset: const Offset(0, 10),
+              offset: const Offset(0, 0),
             ),
+            if (!isDark)
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
           ],
         ),
         child: Row(
