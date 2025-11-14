@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jobconnect/features/auth/presentation/onboarding_screen.dart';
@@ -5,10 +6,11 @@ import 'package:jobconnect/features/auth/presentation/splash_screen.dart';
 import 'package:jobconnect/features/chat/presentation/chat_list_screen.dart';
 import 'package:jobconnect/features/home/presentation/home_screen.dart';
 import 'package:jobconnect/features/job/presentation/my_jobs_screen.dart';
+import 'package:jobconnect/features/job/presentation/job_detail_screen.dart';
 import 'package:jobconnect/features/profile/presentation/profile_screen.dart';
 import 'package:jobconnect/features/notifications/presentation/notification_screen.dart';
 import 'package:jobconnect/features/wishlist/presentation/wishlist_screen.dart';
-import 'package:jobconnect/features/home/presentation/all_categories_screen.dart';
+import 'package:jobconnect/features/job/presentation/category_jobs_screen.dart';
 
 import '../widgets/bottom_nav_bar.dart';
 
@@ -41,11 +43,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
-            path: '/categories',
-            name: 'categories',
-            builder: (context, state) => const AllCategoriesScreen(),
-          ),
-          GoRoute(
             path: '/notifications',
             name: 'notifications',
             builder: (context, state) => const NotificationScreen(),
@@ -54,6 +51,32 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: '/wishlist',
             name: 'wishlist',
             builder: (context, state) => const WishlistScreen(),
+          ),
+          GoRoute(
+            path: '/category',
+            name: 'category',
+            builder: (context, state) {
+              final args = state.extra as CategoryJobsArgs?;
+              if (args == null) {
+                return const Scaffold(
+                  body: Center(child: Text('No category selected')),
+                );
+              }
+              return CategoryJobsScreen(args: args);
+            },
+          ),
+          GoRoute(
+            path: '/job-detail',
+            name: 'job-detail',
+            builder: (context, state) {
+              final args = state.extra as JobDetailArgs?;
+              if (args == null) {
+                return const Scaffold(
+                  body: Center(child: Text('Job details unavailable')),
+                );
+              }
+              return JobDetailScreen(args: args);
+            },
           ),
           GoRoute(
             path: '/chats',

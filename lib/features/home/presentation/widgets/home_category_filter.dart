@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobconnect/app/theme/colors.dart';
 import 'package:jobconnect/app/theme/spacing.dart';
 import 'package:jobconnect/features/home/providers/category_filter_provider.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeCategoryFilter extends ConsumerWidget {
   final List<String> categories;
@@ -42,10 +41,7 @@ class HomeCategoryFilter extends ConsumerWidget {
             onTap: () {
               notifier.select(index);
 
-              // If See All is clicked → navigate or open modal
-              if (categories[index].toLowerCase().contains("see")) {
-                context.push('/categories');
-              }
+              // Additional handling for "See all" happens in parent widget
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 220),

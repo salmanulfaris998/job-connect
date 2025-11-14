@@ -35,4 +35,18 @@ class AppStrings {
 
   // Categories
   static const String allCategoriesTitle = 'All Categories';
+  static const String allCategoriesSearchHint = 'Search categories';
+  static const String allCategoriesDescription =
+      'Browse all work categories and find the right match for you';
+
+  // Job Detail
+  static const String jobDetailTitle = 'Job details';
+  static const String jobDetailDescriptionLabel = 'Description';
+  static const String jobDetailDescriptionSample =
+      'Need a certified electrician to fix wiring issues in a 2-bedroom apartment. '
+      'Must have experience with residential electrical systems and bring their own tools. '
+      'Work includes diagnosing faults and replacing old switches.';
+  static const String jobDetailAgreementNotice =
+      'I agree to the Terms & Conditions and Platform Policy.';
+  static const String jobDetailApplyButton = 'Apply for job';
 }

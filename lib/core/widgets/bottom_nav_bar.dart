@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:jobconnect/app/theme/colors.dart';
+import 'package:jobconnect/core/providers/bottom_nav_visibility_provider.dart';
 
-class BottomNavShell extends StatelessWidget {
+class BottomNavShell extends ConsumerWidget {
   const BottomNavShell({
     super.key,
     required this.child,
@@ -23,11 +25,11 @@ class BottomNavShell extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final index = items.indexWhere(
       (e) => location == e.route || location.startsWith('${e.route}/'),
     );
-    final hideNavBar = location == '/categories';
+    final showNavBar = ref.watch(bottomNavVisibilityProvider);
 
     return Scaffold(
       extendBody: true,
@@ -39,14 +41,14 @@ class BottomNavShell extends StatelessWidget {
             right: 0,
             bottom: 20,
             child: IgnorePointer(
-              ignoring: hideNavBar,
+              ignoring: !showNavBar,
               child: AnimatedSlide(
                 duration: const Duration(milliseconds: 260),
                 curve: Curves.easeInOut,
-                offset: hideNavBar ? const Offset(0, 1.1) : Offset.zero,
+                offset: showNavBar ? Offset.zero : const Offset(0, 1.1),
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
-                  opacity: hideNavBar ? 0.0 : 1.0,
+                  opacity: showNavBar ? 1.0 : 0.0,
                   child: _FloatingNavBar(
                     currentIndex: index >= 0 ? index : 0,
                     unread: unreadCount,
