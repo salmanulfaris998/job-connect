@@ -32,4 +32,7 @@ class AppStrings {
   static const String wishlistClearAll = 'Clear all';
   static const String wishlistEmptyTitle = 'Your wishlist is empty';
   static const String wishlistEmptySubtitle = 'Save jobs to see them here';
+
+  // Categories
+  static const String allCategoriesTitle = 'All Categories';
 }

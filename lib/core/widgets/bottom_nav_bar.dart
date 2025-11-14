@@ -27,6 +27,7 @@ class BottomNavShell extends StatelessWidget {
     final index = items.indexWhere(
       (e) => location == e.route || location.startsWith('${e.route}/'),
     );
+    final hideNavBar = location == '/categories';
 
     return Scaffold(
       extendBody: true,
@@ -37,9 +38,21 @@ class BottomNavShell extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 20,
-            child: _FloatingNavBar(
-              currentIndex: index >= 0 ? index : 0,
-              unread: unreadCount,
+            child: IgnorePointer(
+              ignoring: hideNavBar,
+              child: AnimatedSlide(
+                duration: const Duration(milliseconds: 260),
+                curve: Curves.easeInOut,
+                offset: hideNavBar ? const Offset(0, 1.1) : Offset.zero,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: hideNavBar ? 0.0 : 1.0,
+                  child: _FloatingNavBar(
+                    currentIndex: index >= 0 ? index : 0,
+                    unread: unreadCount,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -59,7 +72,6 @@ class _FloatingNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryBlue = Color(0xFF0066FF);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
