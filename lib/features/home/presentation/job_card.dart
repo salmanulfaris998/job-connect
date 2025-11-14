@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:jobconnect/app/theme/colors.dart';
 import 'package:jobconnect/core/models/job_card_model.dart';
 
 class JobCard extends StatelessWidget {
@@ -18,13 +19,11 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final cardColor = isDark ? theme.colorScheme.surface : Colors.white;
-    final borderColor = isDark
-        ? Colors.white.withOpacity(0.08)
-        : Colors.black.withOpacity(0.06);
-    final textColorPrimary = isDark ? Colors.white : Colors.black;
+    final cardColor = theme.cardColor;
+    final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final textColorPrimary = isDark ? AppColors.darkText : AppColors.lightText;
     final textColorSecondary =
-        isDark ? Colors.white.withOpacity(0.7) : Colors.grey.shade700;
+        isDark ? AppColors.darkSecondaryText : AppColors.lightSecondaryText;
 
     return GestureDetector(
       onTap: onTap,
@@ -60,10 +59,26 @@ class JobCard extends StatelessWidget {
               child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 1.2,
                     child: CachedNetworkImage(
                       imageUrl: job.imageUrl,
                       fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24),
+                          ),
+                          border: Border.all(
+                            color: cardColor,
+                            width: 8,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
 
@@ -77,7 +92,9 @@ class JobCard extends StatelessWidget {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
+                          color: isDark
+                              ? Colors.white.withOpacity(0.12)
+                              : Colors.black.withOpacity(0.08),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(

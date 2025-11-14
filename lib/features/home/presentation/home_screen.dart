@@ -70,8 +70,8 @@ class HomeScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final gridItemWidth = (size.width - (AppSpacing.lg * 2) - AppSpacing.md) / 2;
-    final double mainExtent =
-        (gridItemWidth + 102).ceilToDouble(); // square image + text, tighter fit
+    final imageHeight = gridItemWidth / 1.2; // AspectRatio 1.2 (w/h)
+    final double mainExtent = (imageHeight + 100).ceilToDouble(); // image + text area
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
