@@ -6,6 +6,8 @@ import 'package:jobconnect/features/chat/presentation/chat_list_screen.dart';
 import 'package:jobconnect/features/home/presentation/home_screen.dart';
 import 'package:jobconnect/features/job/presentation/my_jobs_screen.dart';
 import 'package:jobconnect/features/profile/presentation/profile_screen.dart';
+import 'package:jobconnect/features/notifications/presentation/notification_screen.dart';
+import 'package:jobconnect/features/wishlist/presentation/wishlist_screen.dart';
 
 import '../widgets/bottom_nav_bar.dart';
 
@@ -36,6 +38,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: '/home',
             name: 'home',
             builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/notifications',
+            name: 'notifications',
+            builder: (context, state) => const NotificationScreen(),
+          ),
+          GoRoute(
+            path: '/wishlist',
+            name: 'wishlist',
+            builder: (context, state) => const WishlistScreen(),
           ),
           GoRoute(
             path: '/chats',

@@ -3,6 +3,7 @@ class JobCardModel {
   final String price;
   final String title;
   final String location;
+  final String category;
   final bool isSaved;
 
   const JobCardModel({
@@ -10,6 +11,7 @@ class JobCardModel {
     required this.price,
     required this.title,
     required this.location,
+    required this.category,
     this.isSaved = false,
   });
 }

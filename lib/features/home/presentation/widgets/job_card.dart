@@ -7,12 +7,14 @@ class JobCard extends StatelessWidget {
   final JobCardModel job;
   final VoidCallback? onTap;
   final VoidCallback? onSave;
+  final bool? saved;
 
   const JobCard({
     super.key,
     required this.job,
     this.onTap,
     this.onSave,
+    this.saved,
   });
 
   @override
@@ -24,6 +26,7 @@ class JobCard extends StatelessWidget {
     final textColorPrimary = isDark ? AppColors.darkText : AppColors.lightText;
     final textColorSecondary =
         isDark ? AppColors.darkSecondaryText : AppColors.lightSecondaryText;
+    final savedState = saved ?? job.isSaved;
 
     return GestureDetector(
       onTap: onTap,
@@ -33,18 +36,12 @@ class JobCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: borderColor, width: 0.8),
           boxShadow: [
-            if (!isDark)
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 18,
-                offset: const Offset(0, 10),
-              ),
-            if (isDark)
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 24,
-                offset: const Offset(0, 14),
-              ),
+            BoxShadow(
+              color: AppColors.primary.withOpacity(isDark ? 0.10 : 0.20),
+              blurRadius: isDark ? 5 : 20,
+              spreadRadius: 1,
+              offset: const Offset(0, 0),
+            ),
           ],
         ),
         child: Column(
@@ -98,7 +95,7 @@ class JobCard extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          job.isSaved ? Icons.favorite : Icons.favorite_border,
+                          savedState ? Icons.favorite : Icons.favorite_border,
                           color: Colors.white,
                           size: 24,
                         ),
