@@ -396,10 +396,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   return JobCard(
                     job: job,
                     saved: saved,
-                    onTap: () => context.push(
-                      '/job-detail',
-                      extra: JobDetailArgs(job: job),
-                    ),
+                    onTap: () async {
+                      ref.read(bottomNavVisibilityProvider.notifier).show();
+                      await context.push(
+                        '/job-detail',
+                        extra: JobDetailArgs(job: job),
+                      );
+                      if (!mounted) return;
+                      ref.read(bottomNavVisibilityProvider.notifier).show();
+                    },
                     onSave: () => ref.read(wishlistProvider.notifier).toggle(job),
                   );
                 },
