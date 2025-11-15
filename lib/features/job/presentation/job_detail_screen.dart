@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:jobconnect/app/constants/app_strings.dart';
 import 'package:jobconnect/app/theme/colors.dart';
 import 'package:jobconnect/app/theme/spacing.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobconnect/core/models/job_card_model.dart';
+import 'package:jobconnect/core/providers/bottom_nav_visibility_provider.dart';
 import 'package:jobconnect/core/widgets/custom_app_bar.dart';
+import 'package:jobconnect/core/widgets/custom_button.dart';
+import 'package:jobconnect/features/job/providers/job_detail_provider.dart';
 
 class JobDetailArgs {
   final JobCardModel job;
@@ -12,10 +17,33 @@ class JobDetailArgs {
   const JobDetailArgs({required this.job});
 }
 
-class JobDetailScreen extends StatelessWidget {
+class JobDetailScreen extends ConsumerStatefulWidget {
   const JobDetailScreen({super.key, required this.args});
 
   final JobDetailArgs args;
+
+  @override
+  ConsumerState<JobDetailScreen> createState() => _JobDetailScreenState();
+}
+
+class _JobDetailScreenState extends ConsumerState<JobDetailScreen>
+    with RouteAware {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(bottomNavVisibilityProvider.notifier).hide();
+      ref
+          .read(jobDetailProvider.notifier)
+          .initialize(widget.args.job);
+    });
+  }
+
+  @override
+  void dispose() {
+    ref.read(bottomNavVisibilityProvider.notifier).show();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +51,8 @@ class JobDetailScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     final secondaryTextColor =
         isDark ? AppColors.darkSecondaryText : AppColors.lightSecondaryText;
-    final job = args.job;
+    final detailState = ref.watch(jobDetailProvider);
+    final job = detailState?.job ?? widget.args.job;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -32,9 +61,14 @@ class JobDetailScreen extends StatelessWidget {
         title: job.title,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Iconsax.heart),
-            color: theme.colorScheme.primary,
+            onPressed: () =>
+                ref.read(jobDetailProvider.notifier).toggleWishlist(),
+            icon: Icon(
+              detailState?.isSaved == true ? Iconsax.heart5 : Iconsax.heart,
+            ),
+            color: detailState?.isSaved == true
+                ? AppColors.danger
+                : AppColors.darkSecondaryText,
           ),
         ],
       ),
@@ -156,6 +190,20 @@ class JobDetailPosterInfo extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
+        border: Border.all(
+          color: AppColors.primary
+              .withOpacity(theme.brightness == Brightness.dark ? 0.18 : 0.28),
+          width: 0.8,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary
+                .withOpacity(theme.brightness == Brightness.dark ? 0.10 : 0.20),
+            blurRadius: theme.brightness == Brightness.dark ? 5 : 20,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -206,8 +254,6 @@ class JobDetailInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final borderColor =
-        theme.brightness == Brightness.dark ? AppColors.darkBorder : AppColors.lightBorder;
 
     return Container(
       margin: const EdgeInsets.only(top: AppSpacing.md),
@@ -215,13 +261,26 @@ class JobDetailInfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-        border: Border.all(color: borderColor.withOpacity(0.6), width: 0.6),
+        border: Border.all(
+          color: AppColors.primary
+              .withOpacity(theme.brightness == Brightness.dark ? 0.18 : 0.28),
+          width: 0.8,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary
+                .withOpacity(theme.brightness == Brightness.dark ? 0.10 : 0.20),
+            blurRadius: theme.brightness == Brightness.dark ? 5 : 20,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _InfoGrid(job: job),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.xs / 100),
           Divider(color: secondaryTextColor.withOpacity(0.2), thickness: 0.6),
           const SizedBox(height: AppSpacing.md),
           Text(
@@ -282,7 +341,8 @@ class _InfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.darkSecondaryText : AppColors.lightSecondaryText;
+    final labelColor =
+        isDark ? AppColors.darkSecondaryText : AppColors.lightSecondaryText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,22 +378,24 @@ class _JobDetailActionSectionState extends State<JobDetailActionSection> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final borderColor = theme.brightness == Brightness.dark
-        ? AppColors.darkBorder
-        : AppColors.lightBorder;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-        border: Border.all(color: borderColor.withOpacity(0.6), width: 0.6),
+        border: Border.all(
+          color: AppColors.primary
+              .withOpacity(theme.brightness == Brightness.dark ? 0.18 : 0.28),
+          width: 0.8,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black
-                .withOpacity(theme.brightness == Brightness.dark ? 0.26 : 0.12),
-            blurRadius: 18,
-            offset: const Offset(0, 12),
+            color: AppColors.primary
+                .withOpacity(theme.brightness == Brightness.dark ? 0.10 : 0.20),
+            blurRadius: theme.brightness == Brightness.dark ? 5 : 20,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
           ),
         ],
       ),
@@ -360,27 +422,13 @@ class _JobDetailActionSectionState extends State<JobDetailActionSection> {
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          SizedBox(
+          CustomButton(
+            label: AppStrings.jobDetailApplyButton,
             height: 56,
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: agreed
-                    ? AppColors.primary
-                    : theme.disabledColor.withOpacity(0.4),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSpacing.radius),
-                ),
-              ),
-              onPressed: agreed ? () {} : null,
-              child: Text(
-                AppStrings.jobDetailApplyButton,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            onPressed: agreed
+                ? () => context.push('/login')
+                : null,
+            isDisabled: !agreed,
           ),
         ],
       ),

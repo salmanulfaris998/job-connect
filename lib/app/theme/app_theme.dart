@@ -15,6 +15,17 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.lightBackground,
       cardColor: AppColors.lightCard,
+      canvasColor: AppColors.lightCard,
+      popupMenuTheme: PopupMenuThemeData(
+        color: AppColors.lightCard,
+        textStyle: const TextStyle(
+          color: AppColors.lightText,
+          fontSize: 15,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
+        ),
+      ),
       extensions: const [
         FilterChipColors(
           activeBackground: AppColors.primary,
@@ -83,6 +94,17 @@ class AppTheme {
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.darkBackground,
       cardColor: AppColors.darkCard,
+      canvasColor: AppColors.darkCard,
+      popupMenuTheme: PopupMenuThemeData(
+        color: AppColors.darkCard,
+        textStyle: const TextStyle(
+          color: AppColors.darkText,
+          fontSize: 15,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
+        ),
+      ),
       extensions: const [
         FilterChipColors(
           activeBackground: AppColors.primary,

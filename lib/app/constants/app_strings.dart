@@ -39,6 +39,14 @@ class AppStrings {
   static const String allCategoriesDescription =
       'Browse all work categories and find the right match for you';
 
+  // Auth
+  static const String loginTitle = 'Welcome Back';
+  static const String loginSubtitle = 'Connect and find local jobs easily.';
+  static const String loginGoogleButton = 'Continue with Google';
+  static const String loginTermsPrefix = 'By continuing, you agree to our ';
+  static const String loginTerms = 'Terms';
+  static const String loginPrivacyPolicy = 'Privacy Policy';
+
   // Job Detail
   static const String jobDetailTitle = 'Job details';
   static const String jobDetailDescriptionLabel = 'Description';
