@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jobconnect/app/theme/colors.dart';
 import 'package:jobconnect/core/widgets/custom_button.dart';
 import 'package:jobconnect/core/widgets/custom_text_field.dart';
@@ -12,6 +13,18 @@ class CompleteProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formState = ref.watch(completeProfileProvider);
     final notifier = ref.read(completeProfileProvider.notifier);
+
+    ref.listen<CompleteProfileState>(
+      completeProfileProvider,
+      (previous, next) {
+        if (!next.shouldNavigateHome) return;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          notifier.acknowledgeNavigationHandled();
+          if (!context.mounted) return;
+          context.go('/home');
+        });
+      },
+    );
 
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;

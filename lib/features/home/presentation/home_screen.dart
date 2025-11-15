@@ -48,15 +48,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _handleScroll() {
     if (!_scrollController.hasClients) return;
-    final direction = _scrollController.position.userScrollDirection;
+    final position = _scrollController.position;
+    final direction = position.userScrollDirection;
+    final canScroll = position.maxScrollExtent > 0;
+
+    if (!canScroll) {
+      if (!_navVisible) {
+        _navVisible = true;
+        ref.read(bottomNavVisibilityProvider.notifier).show();
+      }
+      return;
+    }
+
     if (direction == ScrollDirection.reverse && _navVisible) {
       _navVisible = false;
       ref.read(bottomNavVisibilityProvider.notifier).hide();
     } else if (direction == ScrollDirection.forward && !_navVisible) {
       _navVisible = true;
       ref.read(bottomNavVisibilityProvider.notifier).show();
-    } else if (_scrollController.position.atEdge &&
-        _scrollController.position.pixels <= 0 &&
+    } else if (position.atEdge &&
+        position.pixels <= 0 &&
         !_navVisible) {
       _navVisible = true;
       ref.read(bottomNavVisibilityProvider.notifier).show();
@@ -164,6 +175,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 j.category.toLowerCase() == selectedCategory.toLowerCase())
             .toList();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (!_scrollController.hasClients) return;
+      final canScroll = _scrollController.position.maxScrollExtent > 0;
+      if (!canScroll && !_navVisible) {
+        _navVisible = true;
+        ref.read(bottomNavVisibilityProvider.notifier).show();
+      }
+    });
+
     final notifCount = ref.watch(notificationCountProvider);
     final badgeText = notifCount > 9 ? '9+' : '$notifCount';
 
@@ -171,7 +192,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: CustomScrollView(
         controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,

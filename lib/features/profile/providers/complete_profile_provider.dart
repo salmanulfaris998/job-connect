@@ -20,6 +20,7 @@ class CompleteProfileState {
     this.currentStep = 0,
     this.totalSteps = 3,
     this.fieldErrors = const {},
+    this.shouldNavigateHome = false,
   });
 
   final String fullName;
@@ -35,6 +36,7 @@ class CompleteProfileState {
   final int currentStep;
   final int totalSteps;
   final Map<String, String> fieldErrors;
+  final bool shouldNavigateHome;
 
   static const Object _sentinel = Object();
 
@@ -52,6 +54,7 @@ class CompleteProfileState {
     int? currentStep,
     int? totalSteps,
     Map<String, String>? fieldErrors,
+    bool? shouldNavigateHome,
   }) {
     return CompleteProfileState(
       fullName: fullName ?? this.fullName,
@@ -71,6 +74,7 @@ class CompleteProfileState {
       currentStep: currentStep ?? this.currentStep,
       totalSteps: totalSteps ?? this.totalSteps,
       fieldErrors: fieldErrors ?? this.fieldErrors,
+      shouldNavigateHome: shouldNavigateHome ?? this.shouldNavigateHome,
     );
   }
 }
@@ -269,13 +273,20 @@ class CompleteProfileNotifier extends Notifier<CompleteProfileState> {
         isSubmitting: false,
         currentStep: state.currentStep + 1,
         successMessage: null,
+        shouldNavigateHome: false,
       );
     } else {
       state = state.copyWith(
         isSubmitting: false,
         successMessage: 'Profile saved successfully.',
+        shouldNavigateHome: true,
       );
     }
+  }
+
+  void acknowledgeNavigationHandled() {
+    if (!state.shouldNavigateHome) return;
+    state = state.copyWith(shouldNavigateHome: false);
   }
 }
 
